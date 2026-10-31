@@ -1,0 +1,15 @@
+{
+  "verifiedAt": "2026-10-31T16:34:54.338Z",
+  "chainId": 5042,
+  "transactionHash": "0xd17e192617550ec249d1bbfe7782917b256e234589d2d4b8393218131869d6c7",
+  "address": "0x20fBfF6d3048A0583fB969cD74DB1501A9C9C043",
+  "block": "28846016",
+  "status": "success",
+  "creationDataMatchesPreparedArtifact": true,
+  "usdc": "0x3600000000000000000000000000000000000000",
+  "usdcDecimals": 6,
+  "agreementCount": "0",
+  "gasUsed": "1709528",
+  "effectiveGasPrice": "25577500000",
+  "actualFeeUSDC": "0.04372545242"
+}

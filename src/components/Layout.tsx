@@ -44,8 +44,9 @@ function NetworkBanner() {
       <div className="mb-6 flex items-start gap-3 rounded-2xl border border-warn/30 bg-warn/10 p-4 text-sm text-warn">
         <AlertTriangle size={18} className="mt-0.5 shrink-0" />
         <p>
-          No escrow contract is configured. Set <span className="font-mono">VITE_FLOW_ESCROW_ADDRESS</span> in{' '}
-          <span className="font-mono">.env</span> to the deployed CoindeccFlowEscrow address and restart the dev server.
+          {FLOW_CHAIN.isTestnet
+            ? 'No escrow contract is configured for this preview. Agreement actions are unavailable.'
+            : 'Arc Mainnet preview: no Mainnet escrow contract has been deployed or configured. Agreement creation, funding, and payment releases are unavailable.'}
         </p>
       </div>
     )

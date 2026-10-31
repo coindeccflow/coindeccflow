@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "bun run build",
+  "installCommand": "bun install --frozen-lockfile",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/agreements", "destination": "/index.html" },
+    { "source": "/agreement/:id", "destination": "/index.html" },
+    { "source": "/create", "destination": "/index.html" },
+    { "source": "/milestones", "destination": "/index.html" },
+    { "source": "/activity", "destination": "/index.html" },
+    { "source": "/settings", "destination": "/index.html" }
+  ]
+}

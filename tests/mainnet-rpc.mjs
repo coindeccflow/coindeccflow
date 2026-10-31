@@ -1,0 +1,28 @@
+import { strict as assert } from 'node:assert'
+import handler from '../api/arc-mainnet.mjs'
+const originalFetch = globalThis.fetch
+process.env.ALCHEMY_ARC_MAINNET_API_KEY = 'test-secret'
+let requests = 0
+ globalThis.fetch = async () => { requests++; return { ok: true, json: async () => ({ jsonrpc: '2.0', id: 1, result: '0x13b2' }) } }
+async function run(method, body, headers = {}) {
+  const output = { statusCode: 200, setHeader() {}, status(n) { this.statusCode = n; return this }, json(data) { this.data = data; return this } }
+  await handler({ method, body, headers }, output)
+  return output
+}
+try {
+  const call = { jsonrpc: '2.0', id: 1, method: 'eth_chainId', params: [] }
+  assert.equal((await run('POST', call)).data.result, '0x13b2')
+  assert.equal((await run('POST', { ...call, params: undefined })).data.result, '0x13b2')
+  assert.equal((await run('GET', call)).statusCode, 405)
+  assert.equal((await run('POST', { ...call, method: 'eth_sendRawTransaction' })).statusCode, 400)
+  assert.equal((await run('POST', [])).statusCode, 400)
+  assert.equal((await run('POST', call, { origin: 'https://evil.example', host: 'app.example' })).statusCode, 403)
+  assert.equal(requests, 2)
+  globalThis.fetch = async () => { throw new Error('test-secret') }
+  const failed = await run('POST', call)
+  assert.equal(failed.statusCode, 502)
+  assert.ok(!JSON.stringify(failed.data).includes('test-secret'))
+  delete process.env.ALCHEMY_ARC_MAINNET_API_KEY
+  assert.equal((await run('POST', call)).statusCode, 503)
+  console.log('Mainnet RPC gateway checks passed')
+} finally { globalThis.fetch = originalFetch }

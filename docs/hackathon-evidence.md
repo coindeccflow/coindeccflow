@@ -12,20 +12,22 @@ Every value is either verified (with its source) or marked PENDING. Nothing here
 | Live application URL | PENDING (deploy via Netlify, Vercel or Hugging Face from Arc Studio, then record the URL) |
 | Demo video link | PENDING |
 
-## Arc Mainnet (PENDING until you deploy yourself)
+## Arc Mainnet (deployment and end-to-end payment demonstration verified)
 
 | Field | Value |
 | --- | --- |
-| Arc Mainnet escrow contract address | PENDING |
-| Deployment transaction hash | PENDING |
-| Deployment block | PENDING |
-| Explorer link (contract) | PENDING (format: `https://explorer.arc.io/address/<address>`) |
+| Arc Mainnet escrow contract address | `0x20fBfF6d3048A0583fB969cD74DB1501A9C9C043` |
+| Deployment transaction hash | `0xd17e192617550ec249d1bbfe7782917b256e234589d2d4b8393218131869d6c7` |
+| Deployment block | 28846016 |
+| Explorer link (contract) | https://explorer.arc.io/address/0x20fBfF6d3048A0583fB969cD74DB1501A9C9C043 |
 | Source verified on explorer | PENDING |
 | Verified USDC token address | `0x3600000000000000000000000000000000000000` (6 decimals). Source: Arc docs, Contract addresses. Read-only check against `rpc.mainnet.arc.io` during preparation: `symbol()` = `USDC`, `decimals()` = `6`. Re-check at deployment time. Link: <https://explorer.arc.io/address/0x3600000000000000000000000000000000000000> |
-| Mainnet funding transaction hash | PENDING |
-| Mainnet milestone 1 release transaction hash | PENDING |
-| Mainnet milestone 2 release transaction hash | PENDING |
-| Explorer links for the above | PENDING (format: `https://explorer.arc.io/tx/<hash>`) |
+| Mainnet agreement creation | [successful transaction](https://explorer.arc.io/tx/0xf41036c626bc24b9870f3fcb8c2837178be4f100ed9c5f9b1d8ba56aa955a943) — agreement #1, 0.01 USDC, two 0.005 milestones; unfunded |
+| Mainnet token allowance | [successful exact 0.01 USDC approval](https://explorer.arc.io/tx/0x819eee56f030d4485f8a47f9a4dfaa243c4123a67baa8b437e3a76c5282f29ab) |
+| Mainnet funding transaction hash | [confirmed 0.01 USDC funding](https://explorer.arc.io/tx/0x033468db2012ebefd30e73aa3e9f6d580f17eb6f551ced939748c32d61db4ee3) |
+| Mainnet milestone 1 release transaction hash | [confirmed 0.005 USDC payout](https://explorer.arc.io/tx/0xacbbb9e11c3f9aab5e2fed6684e790b11c424f43756f39c73849c62f7ee35546) — token Transfer event verified |
+| Mainnet milestone 2 release transaction hash | [confirmed final 0.005 USDC payout](https://explorer.arc.io/tx/0xa0fa938d033f44c819a01a77ca1d7bedb8ba023a741aa391f98ecda66e0245d3) — token Transfer event verified; agreement completed, remaining balance zero |
+| Explorer links for the above | Linked individually above; structured evidence: `docs/mainnet-demo-evidence.json` |
 
 Procedure: `docs/mainnet-deployment.md`.
 
@@ -63,3 +65,5 @@ Not yet shown: the same flow executed by a person through the browser UI with a 
 | Independent professional audit | PENDING | |
 
 Details: `docs/verification-report.md`, `docs/testing.md`.
+
+Mainnet agreement #1 completed through the browser-wallet workflow on 2026-10-31. Both milestones were approved and paid, totaling 0.01 USDC to `0x408ADdE0346D7a9aDf1B6C5A2E2AB236Fa17d412`. Read-only verification confirmed status 2, releasedCount 2, releasedAmount 10000, zero remaining agreement balance, and zero residual token allowance. Mainnet explorer source verification and independent audit remain outstanding. Production Vercel remains unchanged.

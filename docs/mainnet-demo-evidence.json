@@ -1,0 +1,105 @@
+{
+  "checkedAt": "2026-10-31T17:24:02.143Z",
+  "count": "1",
+  "agreements": [
+    {
+      "id": "1",
+      "agreement": {
+        "id": "1",
+        "payer": "0xf08DCbdc4543B542770ab7FaDB11D9E4d1C667d7",
+        "recipient": "0x408ADdE0346D7a9aDf1B6C5A2E2AB236Fa17d412",
+        "title": "CoindeccFlow Mainnet demo",
+        "totalAmount": "10000",
+        "fundedAmount": "10000",
+        "releasedAmount": "10000",
+        "createdAt": "1793465757",
+        "status": 2,
+        "milestoneCount": 2,
+        "releasedCount": 2
+      },
+      "milestones": [
+        {
+          "title": "Mainnet demo \u2014 first release",
+          "description": "",
+          "amount": "5000",
+          "approved": true,
+          "released": true
+        },
+        {
+          "title": "Mainnet demo \u2014 final release",
+          "description": "",
+          "amount": "5000",
+          "approved": true,
+          "released": true
+        }
+      ]
+    }
+  ],
+  "creationReceipt": {
+    "hash": "0xf41036c626bc24b9870f3fcb8c2837178be4f100ed9c5f9b1d8ba56aa955a943",
+    "block": "28848680",
+    "status": "success",
+    "gasUsed": "408645",
+    "feeUSDC": "0.0087858675"
+  },
+  "paymentStatus": "COMPLETED: 0.01 USDC funded and released to the configured recipient in two 0.005 USDC payouts; agreement balance and token allowance are zero",
+  "allowanceReceipt": {
+    "action": "approve",
+    "hash": "0x819eee56f030d4485f8a47f9a4dfaa243c4123a67baa8b437e3a76c5282f29ab",
+    "block": "28850537",
+    "status": "success",
+    "gasUsed": "55426",
+    "feeUSDC": "0.001191659"
+  },
+  "allowanceRaw": "0",
+  "fundingReceipt": {
+    "action": "fundAgreement",
+    "hash": "0x033468db2012ebefd30e73aa3e9f6d580f17eb6f551ced939748c32d61db4ee3",
+    "block": "28851031",
+    "status": "success",
+    "gasUsed": "92456",
+    "feeUSDC": "0.001987804"
+  },
+  "verifiedEscrowBalanceRaw": "10000",
+  "verifiedAgreementBalanceRaw": "0",
+  "firstMilestoneReleaseReceipt": {
+    "action": "releaseMilestone",
+    "hash": "0xacbbb9e11c3f9aab5e2fed6684e790b11c424f43756f39c73849c62f7ee35546",
+    "block": "28851517",
+    "status": "success",
+    "gasUsed": "103135",
+    "feeUSDC": "0.0022174025"
+  },
+  "firstMilestonePayout": {
+    "verifiedAt": "2026-10-31T17:21:33.365Z",
+    "transactionHash": "0xacbbb9e11c3f9aab5e2fed6684e790b11c424f43756f39c73849c62f7ee35546",
+    "token": "0x3600000000000000000000000000000000000000",
+    "from": "0x20fBfF6d3048A0583fB969cD74DB1501A9C9C043",
+    "recipient": "0x408ADdE0346D7a9aDf1B6C5A2E2AB236Fa17d412",
+    "paidRaw": "5000",
+    "paidUSDC": "0.005",
+    "remainingEscrowRaw": "5000",
+    "remainingEscrowUSDC": "0.005",
+    "receiptStatus": "success"
+  },
+  "finalMilestoneReleaseReceipt": {
+    "action": "releaseMilestone",
+    "hash": "0xa0fa938d033f44c819a01a77ca1d7bedb8ba023a741aa391f98ecda66e0245d3",
+    "block": "28851855",
+    "status": "success",
+    "gasUsed": "89833",
+    "feeUSDC": "0.0019314095"
+  },
+  "finalMilestonePayout": {
+    "verifiedAt": "2026-10-31T17:24:14.766Z",
+    "transactionHash": "0xa0fa938d033f44c819a01a77ca1d7bedb8ba023a741aa391f98ecda66e0245d3",
+    "token": "0x3600000000000000000000000000000000000000",
+    "from": "0x20fBfF6d3048A0583fB969cD74DB1501A9C9C043",
+    "recipient": "0x408ADdE0346D7a9aDf1B6C5A2E2AB236Fa17d412",
+    "paidRaw": "5000",
+    "paidUSDC": "0.005",
+    "remainingEscrowRaw": "0",
+    "remainingEscrowUSDC": "0",
+    "receiptStatus": "success"
+  }
+}

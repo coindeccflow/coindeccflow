@@ -20,7 +20,10 @@
     "test:presentation": "bun run ./scripts/test-tx-presentation.ts",
     "audit:balances": "bun run ./scripts/audit-balances.ts",
     "test:lifecycle": "bun run ./scripts/test-tx-lifecycle.ts",
-    "contracts:test": "forge test"
+    "contracts:test": "forge test",
+    "test:rpc": "bun tests/mainnet-rpc.mjs",
+    "verify:mainnet-rpc": "bun tests/mainnet-rpc-live.mjs",
+    "preview:mainnet": "bun tools/preview-mainnet.mjs"
   },
   "dependencies": {
     "@circle-fin/adapter-viem-v2": "^1.19.2",

@@ -433,7 +433,7 @@ export function CreateAgreement() {
             label="Create agreement onchain"
             tx={tx}
             className="flex-1"
-            disabled={allErrors.length > 0 || !guardReady}
+            disabled={!FLOW_ADDRESS || allErrors.length > 0 || !guardReady}
             onClick={() => {
               setStep(4)
               submit()
