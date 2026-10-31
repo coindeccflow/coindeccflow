@@ -1,13 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" fill="none">
   <defs>
-    <linearGradient id="wave" x1="102" y1="14" x2="26" y2="114" gradientUnits="userSpaceOnUse">
+    <linearGradient id="background" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
       <stop stop-color="#E1F7FF"/>
-      <stop offset="0.28" stop-color="#D0ECFF"/>
-      <stop offset="0.56" stop-color="#BBDFFF"/>
-      <stop offset="0.8" stop-color="#8ABBEF"/>
-      <stop offset="1" stop-color="#5A9CDB"/>
+      <stop offset="0.35" stop-color="#C7E5FF"/>
+      <stop offset="0.68" stop-color="#A5CCF2"/>
+      <stop offset="1" stop-color="#79AEE5"/>
     </linearGradient>
   </defs>
-  <rect width="128" height="128" rx="30" fill="#102137" stroke="#29445F" stroke-width="2"/>
-  <path d="M26 46c13 0 13-13 26-13s13 13 26 13 13-13 26-13M26 70c13 0 13-13 26-13s13 13 26 13 13-13 26-13M26 94c13 0 13-13 26-13s13 13 26 13 13-13 26-13" stroke="url(#wave)" stroke-width="9" stroke-linecap="round"/>
+  <rect width="128" height="128" rx="30" fill="url(#background)" stroke="#29445F" stroke-width="2"/>
+  <path d="M26 46c13 0 13-13 26-13s13 13 26 13 13-13 26-13M26 70c13 0 13-13 26-13s13 13 26 13 13-13 26-13M26 94c13 0 13-13 26-13s13 13 26 13 13-13 26-13" stroke="#17365D" stroke-width="9" stroke-linecap="round"/>
 </svg>
