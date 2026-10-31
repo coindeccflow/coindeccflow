@@ -33,6 +33,12 @@ const arcTransport = (urls: readonly string[]) =>
     { rank: false },
   )
 
+// Only a same-origin server route may be supplied; never bundle an Alchemy key.
+const mainnetRpcPath = (import.meta.env.VITE_ARC_MAINNET_RPC_PATH as string | undefined)?.trim()
+if (mainnetRpcPath && !/^\/[a-zA-Z0-9/_-]+$/.test(mainnetRpcPath)) {
+  throw new Error('VITE_ARC_MAINNET_RPC_PATH must be a same-origin path')
+}
+
 const rawProjectId = (import.meta.env.VITE_WALLETCONNECT_PROJECT_ID as string | undefined)?.trim()
 /** WalletConnect Cloud project id from the environment. Undefined when not configured. */
 export const WALLETCONNECT_PROJECT_ID = rawProjectId ? rawProjectId : undefined
@@ -64,7 +70,7 @@ export const config = createConfig({
   }),
   transports: {
     [arcTestnet.id]: arcTransport(arcTestnet.rpcUrls.default.http),
-    [arc.id]: arcTransport(arc.rpcUrls.default.http),
+    [arc.id]: mainnetRpcPath ? http(mainnetRpcPath, { retryCount: 1 }) : arcTransport(arc.rpcUrls.default.http),
     [mainnet.id]: http(), // ENS resolution uses mainnet
   },
 })
