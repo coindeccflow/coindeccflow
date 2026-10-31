@@ -1,5 +1,5 @@
 // Read-only RPC gateway. Wallet signing and broadcasting stay with the wallet.
-import { permitted, withinBudget } from '../server/rpc-policy.mjs'
+import { permitted, withinBudget, requestWeight } from '../server/rpc-policy.mjs'
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store')
   const fail = (status, message) => res.status(status).json({ error: message })
@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     !c || c.jsonrpc !== '2.0' || !permitted(c) ||
     (c.params !== undefined && !Array.isArray(c.params)) || !(typeof c.id === 'string' || typeof c.id === 'number')
   )) return fail(400, 'Unsupported RPC request')
-  if (!withinBudget(calls.length)) {
+  if (!withinBudget(calls.reduce((sum, c) => sum + requestWeight(c), 0))) {
     res.setHeader('Retry-After', '60')
     return fail(429, 'RPC rate limit exceeded')
   }

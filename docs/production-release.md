@@ -49,3 +49,15 @@ verified Mainnet frontend without modifying persisted variables. Browser asset
 scan confirmed the deployed escrow and excluded the real Alchemy key.
 Hosted Production secret configuration and distributed rate controls remain
 unverified until Vercel account/browser access is restored.
+
+Vercel website configuration verified on 2026-10-31: the existing Alchemy key
+was added as non-revealable Secret entries for Production and Preview, and
+COINDECCFLOW_RELEASE_NETWORK was added as Config for Production and Preview.
+The original three VITE_FLOW_* entries were not edited. Preview deployment
+`dpl_4JLAKiMsqZmeRexbRgfV6ydQeTKT` built successfully at revision 186a18a,
+but frontend agreement reads exposed a rejected multicall request path.
+Production promotion was held. Restricted aggregate3 support now validates
+every nested target against escrow/USDC, limits batch width, and counts nested
+calls against the budget. The actual wagmi readContracts path passed live
+read-only regression testing after the fix. A fresh hosted preview must pass
+before promotion; no verification or rate-control completion is implied.

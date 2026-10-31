@@ -3,6 +3,8 @@ import { strict as assert } from 'node:assert'
 import { readFileSync } from 'node:fs'
 import { createPublicClient, http } from 'viem'
 import { arc } from 'viem/chains'
+import { createConfig } from 'wagmi'
+import { readContracts } from 'wagmi/actions'
 import handler from '../api/arc-mainnet.mjs'
 
 const server = Bun.serve({
@@ -40,6 +42,19 @@ try {
     functionName: 'usdc',
   })
   assert.equal(token.toLowerCase(), receipt.usdc.toLowerCase())
+  const artifact = { abi: JSON.parse(readFileSync('deploy/CoindeccFlowEscrow.abi.json', 'utf8')) }
+  const agreement = await client.readContract({ address: receipt.address, abi: artifact.abi, functionName: 'getAgreement', args: [1n] })
+  const milestones = await client.readContract({ address: receipt.address, abi: artifact.abi, functionName: 'getMilestones', args: [1n] })
+  assert.equal(agreement.status, 2)
+  assert.equal(milestones.length, 2)
+  const wagmi = createConfig({ chains: [arc], transports: { [arc.id]: http(url, { retryCount: 0 }) } })
+  const batch = await readContracts(wagmi, { contracts: [
+    { address: receipt.address, abi: artifact.abi, functionName: 'getAgreement', args: [1n], chainId: arc.id },
+    { address: receipt.address, abi: artifact.abi, functionName: 'getMilestones', args: [1n], chainId: arc.id },
+  ] })
+  assert.ok(batch.every(item => item.status === 'success'))
+  console.log('PASS: wagmi agreement and milestone query path')
+  console.log('PASS: completed agreement and both milestone reads through the gateway')
   console.log('PASS: deployed Mainnet escrow code and USDC configuration through frontend RPC gateway')
   const denied = await fetch(url, { method: 'POST', body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'eth_sendRawTransaction', params: [] }) })
   assert.equal(denied.status, 400)

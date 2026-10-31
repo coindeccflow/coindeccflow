@@ -1,3 +1,4 @@
+import { decodeFunctionData, multicall3Abi } from 'viem'
 // App-specific RPC policy, not a general-purpose Ethereum relay.
 const targets = new Set([
   '0x20fbff6d3048a0583fb969cd74db1501a9c9c043',
@@ -8,13 +9,25 @@ const hash = x => typeof x === 'string' && /^0x[0-9a-fA-F]{64}$/.test(x)
 const quantity = x => typeof x === 'string' && /^0x[0-9a-fA-F]{1,16}$/.test(x)
 const block = x => ['latest','pending','safe','finalized','earliest'].includes(x) || quantity(x)
 const target = x => typeof x === 'string' && targets.has(x.toLowerCase())
+const multicall = '0xca11bde05977b3631167028862be2a173976ca11'
+function nestedCalls(tx) {
+ if(typeof tx?.to!=='string'||tx.to.toLowerCase()!==multicall)return undefined
+ try {
+  const decoded=decodeFunctionData({abi:multicall3Abi,data:tx.data??tx.input})
+  if(decoded.functionName!=='aggregate3')return undefined
+  const calls=decoded.args[0]
+  if(!calls.length||calls.length>50||!calls.every(c=>target(c.target)&&typeof c.allowFailure==='boolean'&&/^0x[0-9a-fA-F]{0,32768}$/.test(c.callData)))return undefined
+  return calls
+ }catch{return undefined}
+}
+export const requestWeight = call => call.method==='eth_call' ? (nestedCalls(call.params?.[0])?.length??1) : 1
 export function permitted(call) {
  const p = call.params ?? []
  switch(call.method) {
   case 'eth_chainId': case 'eth_blockNumber': case 'eth_gasPrice': case 'eth_maxPriorityFeePerGas': case 'net_version': return p.length === 0
   case 'eth_call': case 'eth_estimateGas': {
    const tx=p[0]
-   return p.length>=1 && p.length<=2 && tx && target(tx.to) &&
+   return p.length>=1 && p.length<=2 && tx && (target(tx.to)||(call.method==='eth_call'&&Boolean(nestedCalls(tx)))) &&
     Object.keys(tx).every(k=>['to','from','data','input','value','gas','gasPrice','maxFeePerGas','maxPriorityFeePerGas','type','nonce'].includes(k)) &&
     (!tx.from || address(tx.from)) && (!tx.value || tx.value==='0x0') &&
     (!tx.data || /^0x[0-9a-fA-F]{0,32768}$/.test(tx.data)) &&
