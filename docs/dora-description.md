@@ -8,7 +8,7 @@ Built with Arc Studio, the app provides wallet connection, agreement and milesto
 
 The full payment lifecycle has been demonstrated on both Arc Testnet and Arc Mainnet. On Mainnet, agreement #1 was created, funded with 0.01 USDC, and completed through two approved milestone payouts of 0.005 USDC each. Read-only verification confirmed both USDC Transfer events to the configured recipient, completed agreement status, zero remaining escrow balance, and zero residual token allowance.
 
-The frontend uses React, TypeScript, Vite, wagmi, viem, and ConnectKit, with MetaMask used for the Mainnet walkthrough. Alchemy provides Mainnet RPC access through a server-side gateway, keeping its API key out of browser assets. Testnet configuration remains supported. The production build, lint, TypeScript checks, and RPC gateway tests pass.
+The frontend uses React, TypeScript, Vite, wagmi, viem, and ConnectKit, with MetaMask used for the Mainnet walkthrough. Alchemy provides contract and state reads through a server-side gateway, keeping its API key out of browser assets. Bounded event-history queries use Arc’s public endpoint through the same restricted gateway. Testnet configuration remains supported. The production build, lint, TypeScript checks, and RPC gateway tests pass.
 
 ## Mainnet evidence
 

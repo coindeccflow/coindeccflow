@@ -53,6 +53,9 @@ try {
     { address: receipt.address, abi: artifact.abi, functionName: 'getMilestones', args: [1n], chainId: arc.id },
   ] })
   assert.ok(batch.every(item => item.status === 'success'))
+  const events = await client.getContractEvents({ address: receipt.address, abi: artifact.abi, fromBlock: BigInt(receipt.block), toBlock: 28851855n })
+  assert.ok(events.some(e => e.eventName === 'AgreementCompleted'))
+  console.log('PASS: bounded event history includes agreement completion through the fixed public Arc log route')
   console.log('PASS: wagmi agreement and milestone query path')
   console.log('PASS: completed agreement and both milestone reads through the gateway')
   console.log('PASS: deployed Mainnet escrow code and USDC configuration through frontend RPC gateway')

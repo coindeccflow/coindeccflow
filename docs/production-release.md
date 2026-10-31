@@ -61,3 +61,14 @@ every nested target against escrow/USDC, limits batch width, and counts nested
 calls against the budget. The actual wagmi readContracts path passed live
 read-only regression testing after the fix. A fresh hosted preview must pass
 before promotion; no verification or rate-control completion is implied.
+
+The fixed hosted preview at release revision ee95514 rendered agreement #1
+as Completed, with total/funded/released 0.01 USDC and zero remaining balance.
+A Vercel fixed-window rule named "CoindeccFlow RPC request limit" was added
+and published: Request Path Equals /api/arc-mainnet; 100 requests per 60 seconds,
+keyed by IP Address; excess requests return 429. No paid plan upgrade was made.
+The Alchemy Free log API returned a documented 10-block range restriction, so
+only eth_getLogs is routed to the fixed public Circle Arc endpoint. All other
+permitted reads still use Alchemy with the server-only key. Mixed batches are
+split across the two fixed providers and retain sanitized errors and limits.
+Live gateway tests verified completion events across the demo block range.

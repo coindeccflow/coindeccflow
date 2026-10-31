@@ -31,18 +31,30 @@ export default async function handler(req, res) {
     return fail(429, 'RPC rate limit exceeded')
   }
   try {
-    const response = await fetch(`https://arc-mainnet.g.alchemy.com/v2/${key}`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body), signal: AbortSignal.timeout(10000),
-    })
-    if (response.status === 429) return fail(429, 'RPC rate limit exceeded')
-    if (!response.ok) return fail(502, 'RPC unavailable')
-    const result = await response.json()
+    // Alchemy Free caps log scans at 10 blocks. Route only bounded escrow/token
+    // log requests to Circle's fixed public Arc endpoint, never to a caller URL.
+    const groups = [
+      { url: 'https://rpc.mainnet.arc.io', calls: calls.filter(c => c.method === 'eth_getLogs') },
+      { url: `https://arc-mainnet.g.alchemy.com/v2/${key}`, calls: calls.filter(c => c.method !== 'eth_getLogs') },
+    ].filter(group => group.calls.length)
+    const replies = await Promise.all(groups.map(async group => {
+      const response = await fetch(group.url, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Array.isArray(body) ? group.calls : group.calls[0]),
+        signal: AbortSignal.timeout(10000),
+      })
+      if (response.status === 429) return { status: 429 }
+      if (!response.ok) return { status: 502 }
+      return { result: await response.json() }
+    }))
+    const failed = replies.find(reply => reply.status)
+    if (failed) return fail(failed.status, failed.status === 429 ? 'RPC rate limit exceeded' : 'RPC unavailable')
+    const results = replies.flatMap(reply => Array.isArray(reply.result) ? reply.result : [reply.result])
     // Never relay provider errors or headers, which may contain credentials.
     const safeErrors = new Map([[-32012, 'RPC block range too large'], [-32014, 'RPC block not yet imported'], [-32005, 'RPC rate limit exceeded']])
     const clean = item => item && item.error
       ? { jsonrpc: '2.0', id: item.id, error: { code: safeErrors.has(item.error.code) ? item.error.code : -32000, message: safeErrors.get(item.error.code) ?? 'RPC request failed' } }
       : { jsonrpc: '2.0', id: item?.id, result: item?.result }
-    return res.status(200).json(Array.isArray(result) ? result.map(clean) : clean(result))
+    return res.status(200).json(Array.isArray(body) ? results.map(clean) : clean(results[0]))
   } catch { return fail(502, 'RPC unavailable') }
 }

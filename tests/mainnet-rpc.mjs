@@ -18,6 +18,16 @@ try {
   assert.equal((await run('POST', [])).statusCode, 400)
   assert.equal((await run('POST', call, { origin: 'https://evil.example', host: 'app.example' })).statusCode, 403)
   assert.equal(requests, 2)
+  const routes = []
+  globalThis.fetch = async (url, options) => {
+    routes.push(new URL(url).hostname)
+    const sent = JSON.parse(options.body)
+    const answer = c => ({ jsonrpc: '2.0', id: c.id, result: c.method === 'eth_getLogs' ? [] : '0x13b2' })
+    return { ok: true, json: async () => Array.isArray(sent) ? sent.map(answer) : answer(sent) }
+  }
+  const mixed = await run('POST', [call, { jsonrpc: '2.0', id: 2, method: 'eth_getLogs', params: [{ address: '0x20fBfF6d3048A0583fB969cD74DB1501A9C9C043', fromBlock: '0x1', toBlock: '0x2' }] }])
+  assert.equal(mixed.data.length, 2)
+  assert.deepEqual(new Set(routes), new Set(['rpc.mainnet.arc.io', 'arc-mainnet.g.alchemy.com']))
   for (const code of [-32012, -32014, -32005]) {
     globalThis.fetch = async () => ({ ok: true, json: async () => ({ jsonrpc: '2.0', id: 1, error: { code, message: 'test-secret' } }) })
     const result = await run('POST', call)
