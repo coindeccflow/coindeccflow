@@ -1,0 +1,70 @@
+{
+  "chainId": 5042002,
+  "escrow": "0x24A142b37fEADdaE8985d54d00331c9C12d95c11",
+  "headBlock": "69872554",
+  "ranAt": "2026-10-30T17:08:41.111Z",
+  "passed": 12,
+  "failed": 0,
+  "results": [
+    {
+      "check": "chain id",
+      "pass": true,
+      "detail": "RPC reports 5042002, app expects 5042002 (Arc Testnet)"
+    },
+    {
+      "check": "RPC reachable",
+      "pass": true,
+      "detail": "head block 69872554"
+    },
+    {
+      "check": "escrow has bytecode",
+      "pass": true,
+      "detail": "0x24A142b37fEADdaE8985d54d00331c9C12d95c11, 7481 bytes"
+    },
+    {
+      "check": "bytecode matches compiled contract",
+      "pass": true,
+      "detail": "7481 bytes, 224 immutable bytes ignored"
+    },
+    {
+      "check": "multicall3 deployed (batched reads)",
+      "pass": true,
+      "detail": "0xcA11bde05977b3631167028862bE2a173976CA11"
+    },
+    {
+      "check": "escrow token is the Arc USDC",
+      "pass": true,
+      "detail": "0x3600000000000000000000000000000000000000, 6 decimals"
+    },
+    {
+      "check": "agreementCount readable",
+      "pass": true,
+      "detail": "3 agreements exist"
+    },
+    {
+      "check": "agreements for the rehearsal payer",
+      "pass": true,
+      "detail": "#1 \"CoindeccFlow E2E rehearsal\" status 2, 2/2 released, remaining 0; #2 \"E2E cancel check\" status 3, 0/1 released, remaining 0"
+    },
+    {
+      "check": "agreements for the rehearsal recipient",
+      "pass": true,
+      "detail": "ids 1, 2"
+    },
+    {
+      "check": "wallet with no agreements returns an empty list (not an error)",
+      "pass": true,
+      "detail": "ids [] for 0xCD0C0A00Bd9252029c482f9514A5dbEB170b3528"
+    },
+    {
+      "check": "event scan from deployment block",
+      "pass": true,
+      "detail": "16 events in 7 requests of up to 10000 blocks (blocks 69806270 to 69872554); agreement #1: AgreementCreated, AgreementFunded, MilestoneApproved, MilestoneReleased, MilestoneApproved, MilestoneReleased, AgreementCompleted"
+    },
+    {
+      "check": "block timestamps readable",
+      "pass": true,
+      "detail": "block 69811472 at 2026-10-30T08:30:45.000Z"
+    }
+  ]
+}

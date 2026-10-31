@@ -1,0 +1,250 @@
+{
+  "chain": "Arc Testnet",
+  "chainId": 5042002,
+  "escrow": "0x24A142b37fEADdaE8985d54d00331c9C12d95c11",
+  "usdc": "0x3600000000000000000000000000000000000000",
+  "payer": "0x44AAdb3A315549fd6B67119c3C2acF50a6d52068",
+  "recipient": "0x7b2F0A0010Cb7D772260F595BdF09B7cda47B350",
+  "agreementId": "1",
+  "ranAt": "2026-10-30T08:31:28.166Z",
+  "transactions": [
+    {
+      "step": "createAgreement",
+      "hash": "0x976253d83fb96500c44f2e699b6f17ee9cd5cbb6beb2753f5933610f44e6e5bd",
+      "explorer": "https://explorer.testnet.arc.io/tx/0x976253d83fb96500c44f2e699b6f17ee9cd5cbb6beb2753f5933610f44e6e5bd",
+      "status": "success",
+      "block": "69811472",
+      "gasUsed": "448742",
+      "feeUsdc": "0.01121855"
+    },
+    {
+      "step": "usdc.approve(exact)",
+      "hash": "0x2baa18b110b4673fb5cfa6e6382ba5093f16a0004d68ad9d1542db876f457b18",
+      "explorer": "https://explorer.testnet.arc.io/tx/0x2baa18b110b4673fb5cfa6e6382ba5093f16a0004d68ad9d1542db876f457b18",
+      "status": "success",
+      "block": "69811481",
+      "gasUsed": "55426",
+      "feeUsdc": "0.00138565"
+    },
+    {
+      "step": "fundAgreement",
+      "hash": "0xe471632470f09585c6934c3c120519b065ef5a5901324dc9d8b4796fb5fe3cb5",
+      "explorer": "https://explorer.testnet.arc.io/tx/0xe471632470f09585c6934c3c120519b065ef5a5901324dc9d8b4796fb5fe3cb5",
+      "status": "success",
+      "block": "69811489",
+      "gasUsed": "92456",
+      "feeUsdc": "0.0023114"
+    },
+    {
+      "step": "approveMilestone(0)",
+      "hash": "0x10d03b32e7a3d203d7b3f0c78b9c53de04d4e745feea867bb776f29e30c6960c",
+      "explorer": "https://explorer.testnet.arc.io/tx/0x10d03b32e7a3d203d7b3f0c78b9c53de04d4e745feea867bb776f29e30c6960c",
+      "status": "success",
+      "block": "69811497",
+      "gasUsed": "57429",
+      "feeUsdc": "0.001435725"
+    },
+    {
+      "step": "releaseMilestone(0) by payer",
+      "hash": "0xdb83381653cd86fcc42667e1c9fd52cf48a69dbfb1fdd4d630c637e5354dab8b",
+      "explorer": "https://explorer.testnet.arc.io/tx/0xdb83381653cd86fcc42667e1c9fd52cf48a69dbfb1fdd4d630c637e5354dab8b",
+      "status": "success",
+      "block": "69811506",
+      "gasUsed": "128135",
+      "feeUsdc": "0.003203375"
+    },
+    {
+      "step": "usdc.transfer 0.05 to recipient (gas)",
+      "hash": "0xb91cc2909e9ece8c8888582d9a8c2abacad5e0733c256959804440f82e01936f",
+      "explorer": "https://explorer.testnet.arc.io/tx/0xb91cc2909e9ece8c8888582d9a8c2abacad5e0733c256959804440f82e01936f",
+      "status": "success",
+      "block": "69811514",
+      "gasUsed": "48926",
+      "feeUsdc": "0.00122315"
+    },
+    {
+      "step": "approveMilestone(1)",
+      "hash": "0xddbada1613b2c1848f00aed630e4cce2596ff30d9af8654753b8942425a0d730",
+      "explorer": "https://explorer.testnet.arc.io/tx/0xddbada1613b2c1848f00aed630e4cce2596ff30d9af8654753b8942425a0d730",
+      "status": "success",
+      "block": "69811523",
+      "gasUsed": "57441",
+      "feeUsdc": "0.001436025"
+    },
+    {
+      "step": "releaseMilestone(1) by recipient",
+      "hash": "0xdfb3b60159bff65e6f605284cb8bd95a01a28fd249eff873789d6fd0578f112d",
+      "explorer": "https://explorer.testnet.arc.io/tx/0xdfb3b60159bff65e6f605284cb8bd95a01a28fd249eff873789d6fd0578f112d",
+      "status": "success",
+      "block": "69811531",
+      "gasUsed": "85470",
+      "feeUsdc": "0.00213675"
+    },
+    {
+      "step": "createAgreement (to cancel)",
+      "hash": "0x9f7fa904e017cb0da1289bc39ac7cf1d3c180f4bad01ee8f981493d89a8b611f",
+      "explorer": "https://explorer.testnet.arc.io/tx/0x9f7fa904e017cb0da1289bc39ac7cf1d3c180f4bad01ee8f981493d89a8b611f",
+      "status": "success",
+      "block": "69811539",
+      "gasUsed": "304014",
+      "feeUsdc": "0.00760035"
+    },
+    {
+      "step": "cancelAgreement",
+      "hash": "0xe32cae52e687ec5b9cc76a26ce13b2694237c8044f288963a09b7911b8ee06cd",
+      "explorer": "https://explorer.testnet.arc.io/tx/0xe32cae52e687ec5b9cc76a26ce13b2694237c8044f288963a09b7911b8ee06cd",
+      "status": "success",
+      "block": "69811548",
+      "gasUsed": "35141",
+      "feeUsdc": "0.000878525"
+    }
+  ],
+  "checks": [
+    {
+      "check": "created: status",
+      "expected": "0",
+      "observed": "0",
+      "pass": true
+    },
+    {
+      "check": "created: total (6-dec units)",
+      "expected": "200000",
+      "observed": "200000",
+      "pass": true
+    },
+    {
+      "check": "unfunded: approve reverts",
+      "expected": "InvalidAgreementStatus",
+      "observed": "InvalidAgreementStatus",
+      "pass": true
+    },
+    {
+      "check": "unfunded: release reverts",
+      "expected": "InvalidAgreementStatus",
+      "observed": "InvalidAgreementStatus",
+      "pass": true
+    },
+    {
+      "check": "non-payer fund reverts",
+      "expected": "OnlyPayer",
+      "observed": "OnlyPayer",
+      "pass": true
+    },
+    {
+      "check": "exact approval fully consumed (allowance 0)",
+      "expected": "0",
+      "observed": "0",
+      "pass": true
+    },
+    {
+      "check": "funded: status",
+      "expected": "1",
+      "observed": "1",
+      "pass": true
+    },
+    {
+      "check": "funded: remaining",
+      "expected": "200000",
+      "observed": "200000",
+      "pass": true
+    },
+    {
+      "check": "funded: escrow holds funds",
+      "expected": "200000",
+      "observed": "200000",
+      "pass": true
+    },
+    {
+      "check": "double fund reverts",
+      "expected": "InvalidAgreementStatus",
+      "observed": "InvalidAgreementStatus",
+      "pass": true
+    },
+    {
+      "check": "recipient cannot approve",
+      "expected": "OnlyPayer",
+      "observed": "OnlyPayer",
+      "pass": true
+    },
+    {
+      "check": "release before approval reverts",
+      "expected": "MilestoneNotApproved",
+      "observed": "MilestoneNotApproved",
+      "pass": true
+    },
+    {
+      "check": "recipient balance +0.10 USDC after milestone 1",
+      "expected": "100000",
+      "observed": "100000",
+      "pass": true
+    },
+    {
+      "check": "after M1: remaining",
+      "expected": "100000",
+      "observed": "100000",
+      "pass": true
+    },
+    {
+      "check": "after M1: still Funded",
+      "expected": "1",
+      "observed": "1",
+      "pass": true
+    },
+    {
+      "check": "duplicate release reverts",
+      "expected": "MilestoneAlreadyReleased",
+      "observed": "MilestoneAlreadyReleased",
+      "pass": true
+    },
+    {
+      "check": "recipient balance rose by 0.10 USDC minus gas after milestone 2",
+      "expected": "0 < gas <= 0.01 USDC",
+      "observed": "gas 0.002137 USDC",
+      "pass": true
+    },
+    {
+      "check": "completed: status",
+      "expected": "2",
+      "observed": "2",
+      "pass": true
+    },
+    {
+      "check": "completed: remaining",
+      "expected": "0",
+      "observed": "0",
+      "pass": true
+    },
+    {
+      "check": "completed: released",
+      "expected": "200000",
+      "observed": "200000",
+      "pass": true
+    },
+    {
+      "check": "release after completion reverts",
+      "expected": "InvalidAgreementStatus",
+      "observed": "InvalidAgreementStatus",
+      "pass": true
+    },
+    {
+      "check": "cancelled: fund reverts",
+      "expected": "InvalidAgreementStatus",
+      "observed": "InvalidAgreementStatus",
+      "pass": true
+    },
+    {
+      "check": "all transactions succeeded",
+      "expected": "true",
+      "observed": "true",
+      "pass": true
+    },
+    {
+      "check": "agreement events (created, funded, approved x2, released x2, completed)",
+      "expected": "AgreementCreated,AgreementFunded,MilestoneApproved,MilestoneReleased,MilestoneApproved,MilestoneReleased,AgreementCompleted",
+      "observed": "AgreementCreated,AgreementFunded,MilestoneApproved,MilestoneReleased,MilestoneApproved,MilestoneReleased,AgreementCompleted",
+      "pass": true
+    }
+  ],
+  "passed": 24,
+  "failed": 0
+}

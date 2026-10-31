@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Design tokens. Colors are space-separated RGB triplets so Tailwind can apply opacity.
+ * The theme is set on <html data-theme="dark|light"> by the inline script in index.html
+ * (before first paint) and by src/lib/theme.ts afterwards. Dark is the default.
+ */
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --c-ink: 5 11 24; /* #050B18 */
+  --c-sidebar: 8 17 32; /* #081120 */
+  --c-card: 11 20 38; /* #0B1426 */
+  --c-raised: 18 30 54;
+  --c-fg: 248 250 255; /* #F8FAFF */
+  --c-muted: 148 163 184; /* #94A3B8 */
+  --c-brand: 45 156 255; /* #2D9CFF */
+  --c-onbrand: 4 16 31;
+  --c-brandink: 125 193 255;
+  --c-mint: 25 216 173; /* #19D8AD */
+  --c-ok: 25 216 173;
+  --c-warn: 251 191 36;
+  --c-danger: 248 113 113;
+  --line: rgba(148, 163, 184, 0.14);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 14px 32px -20px rgba(0, 0, 0, 0.7);
+  --shadow-accent: 0 8px 24px -12px rgba(45, 156, 255, 0.55);
+  --page-gradient:
+    radial-gradient(820px 460px at 6% -8%, rgba(25, 216, 173, 0.075), transparent 62%),
+    radial-gradient(900px 520px at 96% -6%, rgba(45, 156, 255, 0.11), transparent 62%);
+  --card-sheen: linear-gradient(180deg, rgba(45, 156, 255, 0.045), rgba(11, 20, 38, 0) 55%);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --c-ink: 237 247 255; /* #EDF7FF */
+  --c-sidebar: 255 255 255;
+  --c-card: 255 255 255;
+  --c-raised: 243 248 253;
+  --c-fg: 16 27 53; /* #101B35 */
+  --c-muted: 100 116 139; /* #64748B */
+  --c-brand: 22 115 230; /* #1673E6 */
+  --c-onbrand: 255 255 255;
+  --c-brandink: 15 92 186;
+  --c-mint: 16 201 167; /* #10C9A7 */
+  --c-ok: 8 134 109;
+  --c-warn: 161 98 7;
+  --c-danger: 190 24 60;
+  --line: rgba(16, 27, 53, 0.1);
+  --shadow-card: 0 1px 2px rgba(16, 27, 53, 0.05), 0 14px 32px -18px rgba(22, 115, 230, 0.22);
+  --shadow-accent: 0 8px 22px -10px rgba(22, 115, 230, 0.5);
+  --page-gradient:
+    radial-gradient(820px 460px at 6% -8%, rgba(16, 201, 167, 0.1), transparent 62%),
+    radial-gradient(900px 520px at 96% -6%, rgba(22, 115, 230, 0.1), transparent 62%);
+  --card-sheen: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background-color: rgb(var(--c-ink));
+  background-image: var(--page-gradient);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: rgb(var(--c-fg));
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Smooth theme change without animating layout. */
+.theme-transition,
+.theme-transition * {
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.2s ease,
+    box-shadow 0.25s ease !important;
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--c-brand));
+  outline-offset: 2px;
+}
+
+@layer components {
+  .surface {
+    @apply rounded-[20px] border border-line bg-card shadow-card;
+    background-image: var(--card-sheen);
+  }
+  .field {
+    @apply w-full rounded-xl border border-line bg-ink/60 px-3.5 py-3 text-sm text-fg outline-none transition placeholder:text-muted/70 focus:border-brand focus:ring-2 focus:ring-brand/25;
+  }
+  .label {
+    @apply mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.08em] text-muted;
+  }
+  .btn-primary {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-brand px-5 text-sm font-semibold text-onbrand transition hover:brightness-110 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-ghost {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-line bg-raised px-4 text-sm font-medium text-fg transition hover:border-brand/50 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
