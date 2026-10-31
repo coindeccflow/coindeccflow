@@ -5,22 +5,26 @@ linked to `coindeccflow/coindeccflow`; verify the actual project, owner, domain,
 and current production deployment before changes. Preserve the previous
 production deployment ID and public Testnet values for rollback.
 
-Mainnet production environment values:
+Preserve existing Vercel environment variable values. Add only:
 
-- VITE_FLOW_CHAIN_ID=5042
-- VITE_FLOW_ESCROW_ADDRESS=0x20fBfF6d3048A0583fB969cD74DB1501A9C9C043
-- VITE_FLOW_DEPLOY_BLOCK=28846016
-- VITE_ARC_MAINNET_RPC_PATH=/api/arc-mainnet
-- ALCHEMY_ARC_MAINNET_API_KEY: set privately as a server-only secret.
-- Preserve existing Reown/WalletConnect project ID; inspect allowed domains.
+- COINDECCFLOW_RELEASE_NETWORK=mainnet for the intended Mainnet deployment.
+- ALCHEMY_ARC_MAINNET_API_KEY: store privately as a server-only secret.
+
+`tools/build-release.mjs` selects the verified receipt's chain, escrow, block,
+and RPC path inside the build subprocess when the new selector is mainnet.
+It does not modify stored Testnet values, files, or existing environment entries.
+Preserve any existing Reown/WalletConnect project ID and allowed domains.
+User explicitly authorized server-only key storage in this Vercel project;
+this authorization does not mean the key has been uploaded successfully.
 
 Never upload `.env.local`, `.e2e`, toolchains, compiler artifacts, or test wallet
 material. Deploy the reviewed Git revision; local secrets do not belong in Git.
 `vercel.json` routes the known SPA pages to index.html while leaving `/api` and
 static asset routes untouched. The API function must be deployed with the app,
-not only the static dist directory. Configure hosting rate controls and Alchemy
-quotas before public exposure; the current gateway's Origin checks are not
-authentication or a global rate limit.
+not only the static dist directory. Configure distributed hosting rate controls and Alchemy quotas before public
+exposure. The gateway now restricts contract targets, method payloads, log
+ranges, batch size and per-instance weighted request volume. Origin checks are
+not authentication, and the per-instance budget is not a distributed rate limit.
 
 Validate a preview before promoting: home, direct agreement and settings links,
 Mainnet chain/address, actual server-side RPC eth_chainId and escrow reads,
@@ -31,6 +35,17 @@ current Dora text before replacement, preserve other form fields, and verify
 the saved public description. A final hackathon submission that accepts terms
 or attestations must be completed by the user.
 
-Connector access is currently blocked by automatic approval review pending
-explicit consent to the Vercel integration's potentially broad project/account
-permissions. No Vercel project or production setting has been changed.
+Vercel management is through the user-selected website, not Composio.
+The website requested email-code verification before environment access, and
+browser attachment subsequently failed. Existing variables remain unchanged;
+no server secret has been uploaded by this session. Reconfirm browser access
+and account verification before any environment write or deployment.
+
+Pre-deployment validation of the restricted gateway passed: local RPC policy
+and error-sanitization tests, lint, TypeScript, live read-only Mainnet token and
+escrow checks, and production frontend build (2m 52s). The selector was tested
+with Testnet values in the inherited environment; its subprocess produced the
+verified Mainnet frontend without modifying persisted variables. Browser asset
+scan confirmed the deployed escrow and excluded the real Alchemy key.
+Hosted Production secret configuration and distributed rate controls remain
+unverified until Vercel account/browser access is restored.

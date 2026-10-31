@@ -18,6 +18,12 @@ try {
   assert.equal((await run('POST', [])).statusCode, 400)
   assert.equal((await run('POST', call, { origin: 'https://evil.example', host: 'app.example' })).statusCode, 403)
   assert.equal(requests, 2)
+  for (const code of [-32012, -32014, -32005]) {
+    globalThis.fetch = async () => ({ ok: true, json: async () => ({ jsonrpc: '2.0', id: 1, error: { code, message: 'test-secret' } }) })
+    const result = await run('POST', call)
+    assert.equal(result.data.error.code, code)
+    assert.ok(!JSON.stringify(result.data).includes('test-secret'))
+  }
   globalThis.fetch = async () => { throw new Error('test-secret') }
   const failed = await run('POST', call)
   assert.equal(failed.statusCode, 502)

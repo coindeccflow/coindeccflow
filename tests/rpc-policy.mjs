@@ -1,0 +1,22 @@
+import { strict as assert } from 'node:assert'
+import { permitted, withinBudget } from '../server/rpc-policy.mjs'
+const escrow='0x20fBfF6d3048A0583fB969cD74DB1501A9C9C043'
+const call=(method,params)=>permitted({method,params})
+assert.ok(call('eth_chainId',[]))
+assert.ok(call('eth_call',[{to:escrow,data:'0x313ce567'},'latest']))
+assert.ok(!call('eth_call',[{to:'0x0000000000000000000000000000000000000001'},'latest']))
+assert.ok(!call('eth_call',[{to:escrow},'latest',{}]))
+assert.ok(!call('eth_estimateGas',[{data:'0x6000'}]))
+assert.ok(!call('eth_sendRawTransaction',['0x00']))
+assert.ok(call('eth_getLogs',[{address:escrow,fromBlock:'0x1',toBlock:'0x100'}]))
+assert.ok(call('eth_getLogs',[{address:escrow,fromBlock:'0x1',toBlock:'0x2710'}]))
+assert.ok(!call('eth_getLogs',[{address:escrow,fromBlock:'0x1',toBlock:'0x2711'}]))
+assert.ok(!call('eth_getLogs',[{fromBlock:'0x1',toBlock:'0x100'}]))
+assert.ok(!call('eth_getLogs',[{address:escrow,fromBlock:'0x1',toBlock:'0xfffff'}]))
+assert.ok(!call('eth_getBlockByNumber',['latest',true]))
+assert.ok(!call('eth_feeHistory',['0xffff','latest',[]]))
+const now=Date.now()
+assert.ok(withinBudget(240,now))
+assert.ok(!withinBudget(1,now+1))
+assert.ok(withinBudget(1,now+60000))
+console.log('RPC target restrictions, payload policy, range limits, and weighted per-instance rate budget passed')
