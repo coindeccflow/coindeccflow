@@ -1,5 +1,7 @@
 # Deployment
 
+This guide covers the Testnet deployment workflow. The live Mainnet release and its existing contract are recorded in [Mainnet status](mainnet-build-status.md); hosting the frontend does not require another contract deployment.
+
 ## Arc Testnet (done)
 
 The escrow is deployed on Arc Testnet; configure its address and deployment block in your local `.env` (`VITE_FLOW_ESCROW_ADDRESS`, `VITE_FLOW_DEPLOY_BLOCK`). Historical evidence is in `docs/read-verification.json`; independently confirm those values before use.

@@ -1,15 +1,17 @@
 # CoindeccFlow: hackathon evidence
 
-Every value is either verified (with its source) or marked PENDING. Nothing here is estimated or invented. Update PENDING fields only with real values you have checked yourself.
+Status recorded on 31 October 2026. Confirmed implementation evidence is linked below. PENDING means the item has not been independently checked in this workspace; it does not mean the builder has not supplied it elsewhere.
 
 ## Project
 
 | Field | Value |
 | --- | --- |
 | Project | CoindeccFlow, programmable USDC milestone payments on Arc |
-| Arc Studio development evidence | Built and iterated in Arc Studio. Source of truth: this repository (`contracts/`, `src/`, `scripts/`, `docs/`). Screenshots or export of the Arc Studio project: PENDING |
-| GitHub repository | PENDING |
-| Live application URL | PENDING (deploy via Netlify, Vercel or Hugging Face from Arc Studio, then record the URL) |
+| Arc Studio development evidence | Built and iterated in Arc Studio. Source of truth: this repository (`contracts/`, `src/`, `scripts/`, `docs/`). Public Arc Studio project URL and supporting screenshots/export: PENDING |
+| GitHub repository | [coindeccflow/coindeccflow](https://github.com/coindeccflow/coindeccflow); repository is currently private. Public access remains unresolved for submission review. |
+| Live application URL | [Production app](https://coindeccflow.vercel.app/) and [completed Mainnet demo](https://coindeccflow.vercel.app/agreement/1) |
+| Dora project | [Published project and updated description](https://dorahacks.io/build/48921) |
+| Final hackathon entry status | PENDING: project publication alone does not confirm entry into the hackathon. |
 | Demo video link | PENDING |
 
 ## Arc Mainnet (deployment and end-to-end payment demonstration verified)
@@ -22,7 +24,7 @@ Every value is either verified (with its source) or marked PENDING. Nothing here
 | Explorer link (contract) | https://explorer.arc.io/address/0x20fBfF6d3048A0583fB969cD74DB1501A9C9C043 |
 | Source verified on explorer | PENDING |
 | Verified USDC token address | `0x3600000000000000000000000000000000000000` (6 decimals). Source: Arc docs, Contract addresses. Read-only check against `rpc.mainnet.arc.io` during preparation: `symbol()` = `USDC`, `decimals()` = `6`. Re-check at deployment time. Link: <https://explorer.arc.io/address/0x3600000000000000000000000000000000000000> |
-| Mainnet agreement creation | [successful transaction](https://explorer.arc.io/tx/0xf41036c626bc24b9870f3fcb8c2837178be4f100ed9c5f9b1d8ba56aa955a943) — agreement #1, 0.01 USDC, two 0.005 milestones; unfunded |
+| Mainnet agreement creation | [successful transaction](https://explorer.arc.io/tx/0xf41036c626bc24b9870f3fcb8c2837178be4f100ed9c5f9b1d8ba56aa955a943) — creation of agreement #1, 0.01 USDC, two 0.005 milestones; subsequently funded and completed below |
 | Mainnet token allowance | [successful exact 0.01 USDC approval](https://explorer.arc.io/tx/0x819eee56f030d4485f8a47f9a4dfaa243c4123a67baa8b437e3a76c5282f29ab) |
 | Mainnet funding transaction hash | [confirmed 0.01 USDC funding](https://explorer.arc.io/tx/0x033468db2012ebefd30e73aa3e9f6d580f17eb6f551ced939748c32d61db4ee3) |
 | Mainnet milestone 1 release transaction hash | [confirmed 0.005 USDC payout](https://explorer.arc.io/tx/0xacbbb9e11c3f9aab5e2fed6684e790b11c424f43756f39c73849c62f7ee35546) — token Transfer event verified |
@@ -51,7 +53,7 @@ Live rehearsal of the full flow (agreement #1, 0.20 USDC, two milestones of 0.10
 
 Observed in that run: recipient balance rose by exactly 100000 base units (0.10 USDC) after milestone 1; remaining escrow went 0.20 to 0.10 to 0; final status Completed; duplicate release, release before approval, release before funding, a non-payer fund, a non-payer approval, a second fund, and funding after cancellation all reverted with the expected error.
 
-Not yet shown: the same flow executed by a person through the browser UI with a browser wallet. Record that run here when you do it (transaction hashes from the UI): PENDING.
+The Mainnet browser-wallet walkthrough is complete: the user reviewed and signed the funding, approvals, and both payouts in MetaMask. The resulting transactions are recorded in the Mainnet evidence above. The Testnet table records the earlier automated rehearsal.
 
 ## Test results
 
@@ -66,4 +68,4 @@ Not yet shown: the same flow executed by a person through the browser UI with a 
 
 Details: `docs/verification-report.md`, `docs/testing.md`.
 
-Mainnet agreement #1 completed through the browser-wallet workflow on 2026-10-31. Both milestones were approved and paid, totaling 0.01 USDC to `0x408ADdE0346D7a9aDf1B6C5A2E2AB236Fa17d412`. Read-only verification confirmed status 2, releasedCount 2, releasedAmount 10000, zero remaining agreement balance, and zero residual token allowance. Mainnet explorer source verification and independent audit remain outstanding. Production Vercel remains unchanged.
+Mainnet agreement #1 completed through the browser-wallet workflow on 2026-10-31. Both milestones were approved and paid, totaling 0.01 USDC to `0x408ADdE0346D7a9aDf1B6C5A2E2AB236Fa17d412`. Read-only verification confirmed status 2, releasedCount 2, releasedAmount 10000, zero remaining agreement balance, and zero residual token allowance. Mainnet explorer source verification and independent audit remain outstanding. The Mainnet frontend is live at [coindeccflow.vercel.app](https://coindeccflow.vercel.app/), and the Dora description is updated. See [production release](production-release.md).

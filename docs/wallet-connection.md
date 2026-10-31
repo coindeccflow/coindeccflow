@@ -42,4 +42,6 @@ Connecting only reads your address. The app never sends a transaction or a signa
 
 ## Network handling
 
-Arc Testnet (5042002) is the default and is the first chain offered to WalletConnect. Arc mainnet (5042) is configured and used only when `VITE_FLOW_CHAIN_ID=5042`. If your wallet is on another network, the app shows a banner and the action buttons turn into "Switch to Arc Testnet". Chain parameters match the generated Arc registry.
+The public Vercel release runs on Arc Mainnet (5042). Local source defaults remain Arc Testnet (5042002). The release selector sets the Mainnet chain inside the build process; manual configuration can also select it with `VITE_FLOW_CHAIN_ID=5042`. If the connected wallet is on another chain, the app asks it to switch to the app’s configured network. Chain parameters match the generated Arc registry.
+
+The iPhone steps above describe the Testnet rehearsal. Do not use test tokens or the Testnet contract address for the live Mainnet app. Reown QR/mobile links require their project ID and allowed domains; the completed Mainnet demonstration used MetaMask.

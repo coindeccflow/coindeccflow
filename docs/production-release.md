@@ -1,74 +1,42 @@
-# Mainnet production release candidate
+# Mainnet production release
 
-Requested destination: existing `coindeccflow.vercel.app` Vercel application,
-linked to `coindeccflow/coindeccflow`; verify the actual project, owner, domain,
-and current production deployment before changes. Preserve the previous
-production deployment ID and public Testnet values for rollback.
+Released on 31 October 2026 to the existing [CoindeccFlow Vercel domain](https://coindeccflow.vercel.app/).
 
-Preserve existing Vercel environment variable values. Add only:
+## Release record
 
-- COINDECCFLOW_RELEASE_NETWORK=mainnet for the intended Mainnet deployment.
-- ALCHEMY_ARC_MAINNET_API_KEY: store privately as a server-only secret.
+| Item | Value |
+| --- | --- |
+| Source repository | `coindeccflow/coindeccflow` |
+| Mainnet release branch | `phase1/alchemy-mainnet-rpc` |
+| Validated release revision | `5be087ca5ad5f8ff0184990468a2deb1f69cfdc0` |
+| Main release merge | `5e8516738c2b9e7ccc37f3d6eeaae13dc95f4d84` |
+| Production deployment | `dpl_FW3pnsFC3c6fDRSq9RMYY1Ps5pBq` |
+| Previous production deployment retained for rollback | `dpl_FyhKVHh4yPjCngDfnFwf5U9XbUie` |
+| Payment evidence | [Completed agreement #1](https://coindeccflow.vercel.app/agreement/1) |
+| Published project description | [Dora project 48921](https://dorahacks.io/build/48921) |
 
-`tools/build-release.mjs` selects the verified receipt's chain, escrow, block,
-and RPC path inside the build subprocess when the new selector is mainnet.
-It does not modify stored Testnet values, files, or existing environment entries.
-Preserve any existing Reown/WalletConnect project ID and allowed domains.
-User explicitly authorized server-only key storage in this Vercel project;
-this authorization does not mean the key has been uploaded successfully.
+## Environment configuration
 
-Never upload `.env.local`, `.e2e`, toolchains, compiler artifacts, or test wallet
-material. Deploy the reviewed Git revision; local secrets do not belong in Git.
-`vercel.json` routes the known SPA pages to index.html while leaving `/api` and
-static asset routes untouched. The API function must be deployed with the app,
-not only the static dist directory. Configure distributed hosting rate controls and Alchemy quotas before public
-exposure. The gateway now restricts contract targets, method payloads, log
-ranges, batch size and per-instance weighted request volume. Origin checks are
-not authentication, and the per-instance budget is not a distributed rate limit.
+`ALCHEMY_ARC_MAINNET_API_KEY` is stored as a non-revealable Vercel Secret for Production and Preview. Its value belongs only in the server environment. `COINDECCFLOW_RELEASE_NETWORK=mainnet` is a Config entry in those environments.
 
-Validate a preview before promoting: home, direct agreement and settings links,
-Mainnet chain/address, actual server-side RPC eth_chainId and escrow reads,
-blocked signing/broadcast methods, sanitized errors, and no credential in
-browser assets. Then promote to the existing domain and repeat public checks.
-Only afterward publish Dora description with the confirmed live URL. Retain
-current Dora text before replacement, preserve other form fields, and verify
-the saved public description. A final hackathon submission that accepts terms
-or attestations must be completed by the user.
+The existing three `VITE_FLOW_*` entries were preserved. `tools/build-release.mjs` reads the recorded deployment receipt and supplies the Mainnet chain, escrow address, deployment block, and `/api/arc-mainnet` path to the build subprocess. It does not overwrite saved Testnet values. Reown remains an optional, separate public project-ID setting.
 
-Vercel management is through the user-selected website, not Composio.
-The website requested email-code verification before environment access, and
-browser attachment subsequently failed. Existing variables remain unchanged;
-no server secret has been uploaded by this session. Reconfirm browser access
-and account verification before any environment write or deployment.
+Local environment files, test-wallet material, compiler output, screenshots, and toolchains are excluded by `.gitignore`. Never commit credentials or prefix a secret with `VITE_`.
 
-Pre-deployment validation of the restricted gateway passed: local RPC policy
-and error-sanitization tests, lint, TypeScript, live read-only Mainnet token and
-escrow checks, and production frontend build (2m 52s). The selector was tested
-with Testnet values in the inherited environment; its subprocess produced the
-verified Mainnet frontend without modifying persisted variables. Browser asset
-scan confirmed the deployed escrow and excluded the real Alchemy key.
-Hosted Production secret configuration and distributed rate controls remain
-unverified until Vercel account/browser access is restored.
+## Hosting and RPC controls
 
-Vercel website configuration verified on 2026-10-31: the existing Alchemy key
-was added as non-revealable Secret entries for Production and Preview, and
-COINDECCFLOW_RELEASE_NETWORK was added as Config for Production and Preview.
-The original three VITE_FLOW_* entries were not edited. Preview deployment
-`dpl_4JLAKiMsqZmeRexbRgfV6ydQeTKT` built successfully at revision 186a18a,
-but frontend agreement reads exposed a rejected multicall request path.
-Production promotion was held. Restricted aggregate3 support now validates
-every nested target against escrow/USDC, limits batch width, and counts nested
-calls against the budget. The actual wagmi readContracts path passed live
-read-only regression testing after the fix. A fresh hosted preview must pass
-before promotion; no verification or rate-control completion is implied.
+Vercel builds the app with `bun tools/build-release.mjs` and deploys both `dist` and the `/api/arc-mainnet` server function. Publishing only `dist` would omit the gateway. `vercel.json` rewrites the known application routes while leaving API and asset requests intact.
 
-The fixed hosted preview at release revision ee95514 rendered agreement #1
-as Completed, with total/funded/released 0.01 USDC and zero remaining balance.
-A Vercel fixed-window rule named "CoindeccFlow RPC request limit" was added
-and published: Request Path Equals /api/arc-mainnet; 100 requests per 60 seconds,
-keyed by IP Address; excess requests return 429. No paid plan upgrade was made.
-The Alchemy Free log API returned a documented 10-block range restriction, so
-only eth_getLogs is routed to the fixed public Circle Arc endpoint. All other
-permitted reads still use Alchemy with the server-only key. Mixed batches are
-split across the two fixed providers and retain sanitized errors and limits.
-Live gateway tests verified completion events across the demo block range.
+The gateway permits app-specific read/simulation methods, escrow/USDC targets, and validated Multicall3 reads whose nested targets are also restricted. It bounds payload size, batch width, log ranges, and per-instance weighted request volume. Transaction signing and broadcasting remain with the wallet. Provider errors are sanitized.
+
+Contract/state reads use Alchemy. Only bounded `eth_getLogs` requests use Arc’s fixed public endpoint, because Alchemy Free restricts log scans to ten-block ranges. Callers cannot supply upstream URLs.
+
+A published Vercel firewall rule applies to exactly `/api/arc-mainnet`: 100 requests per 60 seconds per IP, with HTTP 429 above the limit. Origin rejection and the per-instance budget add protection; they are not authentication or a hard global spending cap.
+
+## Validation and rollback
+
+The hosted preview passed before the release was merged into `main`. Public production checks then confirmed chain 5042, USDC decimals 6, deployed escrow code, completed agreement/milestone reads, and completion events. Signing/broadcast requests and unrelated browser origins were rejected. Direct agreement and Settings routes worked. A scan of 89 public browser assets found no real Alchemy credential.
+
+The public agreement displayed the complete 0.01 USDC payment and seven lifecycle entries. Dora’s saved public description included the live app, completed demo, and actual transaction links. These checks sent no paid transactions.
+
+Keep the previous production deployment available for rollback through Vercel. Restoring a frontend deployment does not reverse blockchain transactions. The independent audit, explorer source verification, and unconfirmed submission materials are tracked in [hackathon evidence](hackathon-evidence.md).

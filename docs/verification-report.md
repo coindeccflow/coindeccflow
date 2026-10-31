@@ -1,5 +1,7 @@
 # Verification report
 
+Historical scope: the original contract/Testnet validation. Current Mainnet deployment, browser-wallet demonstration, and production checks are recorded in [Mainnet status](mainnet-build-status.md).
+
 Scope: `contracts/CoindeccFlowEscrow.sol` (unchanged since deployment), the frontend, and the deployed Arc Testnet instance. Passing tests are evidence, not proof of security. This report separates what was observed from what was reasoned about.
 
 ## 1. Contract review (manual, line by line)

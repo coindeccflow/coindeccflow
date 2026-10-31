@@ -1,5 +1,7 @@
 # CoindeccFlow — Programmable USDC milestone payments on Arc
 
+[Live app](https://coindeccflow.vercel.app/) · [Completed Mainnet demo](https://coindeccflow.vercel.app/agreement/1)
+
 CoindeccFlow helps clients, freelancers, and service providers connect payments to agreed milestones. The payer creates an agreement with a fixed recipient and USDC amounts, funds the escrow, and approves completed milestones. The payer or recipient can then release the approved payment onchain.
 
 Built with Arc Studio, the app provides wallet connection, agreement and milestone dashboards, transaction lifecycle tracking, and explorer links. Its Solidity escrow has no owner or administrator; payments go only to the recipient chosen when the agreement is created.

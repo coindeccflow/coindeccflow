@@ -19,3 +19,13 @@ broadcast/
 contracts/broadcast/
 contracts/.compass-verify/
 .DS_Store
+
+# Local hosting metadata and private key material
+.vercel/
+.secrets/
+keystore/
+keystores/
+*.pem
+*.key
+*.p12
+*.pfx
