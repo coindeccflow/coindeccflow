@@ -1,86 +1,30 @@
-# Phase 1 Alchemy RPC
+# Alchemy Mainnet RPC gateway
 
-The browser may opt into `/api/arc-mainnet` using
-`VITE_ARC_MAINNET_RPC_PATH`. The gateway uses only the server environment
-`ALCHEMY_ARC_MAINNET_API_KEY`; never put that key in a VITE variable.
-The upstream hostname is fixed. Errors are sanitized. Only read/simulation
-methods are allowed; wallet transactions continue through existing connectors.
-No automatic public fallback is used when the gateway is selected, so a broken
-Alchemy configuration is visible. Without the setting, existing RPCs remain.
+The live Mainnet frontend uses the same-origin `/api/arc-mainnet` function. The Alchemy key is read only from the server environment as `ALCHEMY_ARC_MAINNET_API_KEY`; it must never be a `VITE_*` value or part of browser assets.
 
-Use an isolated Vercel project only after separate approval. Do not edit the
-current production environment. Configure the server secret privately and set
-provider quotas plus hosting rate limits before exposing the gateway publicly;
-Origin checks do not prevent direct clients from consuming the quota.
-Vite alone does not run the server function; use a compatible function runtime.
+## Request routing and restrictions
 
-No real credential was supplied or used during implementation. Verify chain ID
-5042 and USDC ERC-20 address 0x3600000000000000000000000000000000000000,
-with 6 decimals, through the configured gateway before deployment approval.
-The native gas denomination uses 18 decimals. No Mainnet escrow address is
-invented: leave it empty until a separately authorized deployment exists.
-Mainnet remains blocked by the independent contract audit and deployment steps
-in the readiness audit. Testnet and Reown settings are unchanged.
+- Alchemy handles permitted contract and state reads.
+- Bounded `eth_getLogs` requests use the fixed public Arc endpoint. Alchemy Free’s ten-block scan limit prevents the app’s historical scans from using that provider.
+- Upstream URLs and escrow/USDC targets are fixed in server code.
+- Multicall3 is allowed only for validated `aggregate3` requests whose inner calls target the configured escrow or USDC contract.
+- Payloads, batch width, log ranges, and weighted per-instance request volume are bounded. The Vercel firewall adds a published 100-request/60-second limit per IP for this path.
+- Unrelated browser origins are rejected and provider errors are sanitized. These controls are not authentication or a hard global spend cap.
+- Signing and broadcasting methods are rejected. Wallet transactions continue through the existing connectors and require wallet approval.
 
-Run `bun tests/mainnet-rpc.mjs` for gateway checks, `bun run check`,
-`bun run build`, and the existing transaction tests. Contract tests use Foundry.
+The Vercel Secret and release selector are configured for Production and Preview. The selector applies Mainnet settings from the verified deployment receipt without overwriting saved Testnet configuration. See [production release](production-release.md).
 
-## Local verification
+## Local validation
 
-`bun run test:rpc` runs the gateway regression tests without a real provider.
-`bun run verify:mainnet-rpc` explicitly starts a temporary loopback HTTP server,
-uses viem through the gateway to read chain ID and token decimals, checks that
-transaction submission is rejected, and shuts the server down. It reads the key
-from the ignored `.env.local` file. It never signs or broadcasts a transaction.
-This verifies the actual HTTP/viem gateway path, not a deployed Vercel function
-or browser wallet session. A Vercel preview still requires separate approval.
+Vite alone does not run the server function. Use the loopback-only preview tool to serve the production build and gateway together. Provide the key privately in an ignored `.env.local`, using `.env.mainnet.example` as the configuration reference.
 
-The live read-only integration passed for chain ID 5042 and USDC decimals 6.
-The gateway accepts standard requests with omitted params (including viem's
-`eth_chainId` request), while rejecting unsupported methods and malformed params.
+```bash
+bun run test:rpc
+bun run verify:mainnet-rpc
+COINDECCFLOW_RELEASE_NETWORK=mainnet bun tools/build-release.mjs
+bun run preview:mainnet
+```
 
-Validation on 2026-10-31: lint and TypeScript passed; gateway regressions and
-live HTTP/viem integration passed. The production build with
-`VITE_ARC_MAINNET_RPC_PATH=/api/arc-mainnet` passed under official Node 22.23.4
-(Vite 6.4.5, 5m 53s). It emitted dependency annotation and large-chunk warnings.
-The built browser files contained the proxy path and excluded the actual key.
-Bun builds were interrupted after prolonged transformation; the app-bundled
-Node runtime could not load Rollup because of macOS library validation.
-The successful build used a checksum-verified temporary official Node runtime,
-without changing system settings or repository dependencies.
-No browser automation surface was available, so visual wallet interaction
-remains unverified. Foundry contract tests remain blocked by missing Foundry.
-No public preview, push, production change, contract deployment, or transaction
-was performed.
+The mocked regression suite verifies the gateway policy and sanitized failures. The opt-in live suite starts a temporary loopback server and checks actual viem/wagmi reads, deployed escrow/token settings, completed agreement #1, and bounded completion events. It never signs or broadcasts.
 
-## Isolated Mainnet preview
-
-The ignored local `.env.local` selects chain 5042, the same-origin gateway,
-and blank escrow address/deployment block. The shared default remains Testnet.
-The Mainnet banner explains that agreement operations are unavailable until a
-Mainnet escrow exists; the create submission button is explicitly disabled
-without an escrow address, in addition to the existing submit-handler guard.
-No Testnet contract address is copied into the Mainnet configuration.
-A supplied public wallet can be checked read-only for deployment preparation;
-no gas budget or signing authorization is inferred from supplying its address.
-
-## Deployment preparation (read-only)
-
-With the approved deployment ceiling of 0.05 USDC, the source was compiled
-using solc 0.8.28, optimizer 200 runs, and Cancun. At Mainnet block 28844365,
-Alchemy estimated 1,724,263 gas from the supplied deploying wallet: 0.04439977225
-USDC at 25.75 Gwei, or 0.0488397675 with a 10% gas allowance. This is an
-estimate, not a deployment or receipt. The independent audit is outstanding.
-
-`tools/estimate-mainnet-deployment.mjs` uses an external pinned compiler module
-selected via SOLC_MODULE and records compiler input, bytecode artifact, and
-read-only estimate under ignored `.e2e/mainnet-deployment/`. It never signs.
-`bun tools/prepare-mainnet-deployment.mjs` generates a local wallet review page
-and unsigned transaction from those artifacts. Serve only index.html and
-deploy.js on loopback; never expose the full workspace or environment files.
-The page refreshes gas estimation before requesting a wallet transaction,
-enforces chain/wallet and a 0.05 USDC maximum gas liability, preserves at least
-0.04175391550860238 USDC, and blocks duplicate wallet submissions. The user
-must review and sign through MetaMask. Browser-wallet availability and actual
-submission remain unverified. `bun tests/deployment-review.mjs` tests fee,
-reserve, wallet, chain, and duplicate-submission guards against mocked RPCs.
+The release also passed public Vercel read-only checks. A scan of 89 public browser assets at release found no Alchemy credential. The completed Mainnet wallet demonstration and current assurance limitations are recorded in [Mainnet status](mainnet-build-status.md); passing RPC checks does not constitute a contract security audit.

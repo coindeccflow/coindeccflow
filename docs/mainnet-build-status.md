@@ -1,55 +1,38 @@
-# CoindeccFlow Mainnet build handoff
+# CoindeccFlow Mainnet status
 
-The local Mainnet frontend targets the verified escrow at
-`0x20fBfF6d3048A0583fB969cD74DB1501A9C9C043`, starting event scans at block
-`28846016` on Arc chain `5042`. The verified receipt is in
-`docs/mainnet-deployment-receipt.json`. Deployment cost 0.04372545242 USDC.
-The successful receipt and creation-data match confirm deployment; they do not
-mean the source has been verified on the explorer or independently audited.
+Release verified on 31 October 2026.
 
-The local `.env.local` contains public network settings plus the server-only
-Alchemy key and is ignored by Git. `.env.mainnet.example` provides the public
-contract configuration without a credential. The default `.env.example` and
-shared source defaults remain Testnet. Nothing has been pushed, merged, or
-published to the current Vercel production project.
+## Live application
 
-`bun run verify:mainnet-rpc` confirms that viem can reach the deployed escrow
-through the HTTP gateway, checks its token address, and rejects transaction
-submission through that gateway. Wallet transactions remain with MetaMask.
-`bun run preview:mainnet` serves the production build plus the RPC gateway on
-127.0.0.1:4173. It is local development tooling, not public hosting.
+- [Production app](https://coindeccflow.vercel.app/)
+- [Completed Mainnet agreement #1](https://coindeccflow.vercel.app/agreement/1)
+- [Updated Dora project](https://dorahacks.io/build/48921)
+- Network: Arc Mainnet, chain ID 5042.
+- Escrow: `0x20fBfF6d3048A0583fB969cD74DB1501A9C9C043`, deployed at block 28846016.
 
-## Final local validation
+The release branch was merged into `main` at `5e8516738c2b9e7ccc37f3d6eeaae13dc95f4d84`. Vercel built the production deployment successfully, and the public domain passed read-only gateway and browser checks. The deployment receipt is in [mainnet-deployment-receipt.json](mainnet-deployment-receipt.json).
 
-The rebuilt Mainnet frontend passed Vite production build (2m 23s), lint,
-TypeScript, gateway tests, and live deployed-contract reads through the gateway.
-Generated browser files include the deployed address and exclude the real API
-key. Browser inspection confirmed Arc Mainnet, chain 5042, the verified escrow,
-USDC address, and deployment block 28846016; the missing-contract warning is gone.
-MetaMask was not detected in the in-app browser, so use the external browser
-where MetaMask is installed for the wallet walkthrough. Reown remains optional
-and its project ID has not been configured. Source verification could not be
-completed via the explorer API: its read endpoint returned HTTP 403.
+## Completed payment demonstration
 
-## Completed Mainnet payment walkthrough
+Agreement #1 was created, funded with 0.01 USDC, and completed through two approved payouts of 0.005 USDC each. The user reviewed and signed the wallet transactions in MetaMask. Read-only checks confirmed completed status, two released milestones, both token transfers, zero remaining agreement balance, and zero residual allowance.
 
-Agreement #1 was created and funded with 0.01 USDC, then both 0.005 USDC
-milestones were approved and released through the user's MetaMask workflow.
-Read-only verification confirmed the two token payouts to the configured
-recipient, completed status (2), released count 2, total released 10000,
-remaining agreement balance 0, and residual token allowance 0.
-Receipts and evidence are in `docs/mainnet-demo-evidence.json` and
-`docs/hackathon-evidence.md`. No wallet approval was performed by the agent.
+[Structured payment evidence](mainnet-demo-evidence.json) and [explorer links](hackathon-evidence.md) record the actual transactions.
 
-## Outstanding release items
+## Validation
 
-- Source verification on the explorer remains pending (API returned HTTP 403).
-- Independent security audit and rerun of the Arc Foundry tests are outstanding.
-  The contract has no refund, pause, rescue, or upgrade mechanism.
-- Changes remain on the local development branch; no push, merge, hosted
-  frontend deployment, or production Vercel update has been performed.
-- Dora description changes remain deferred at the user's request.
+- Production frontend build, lint, and TypeScript checks passed.
+- Gateway policy, provider-error sanitization, and multicall regressions passed.
+- Public Vercel gateway checks passed for chain ID, token decimals, deployed escrow code, agreement/milestone reads through wagmi, and completion events.
+- Signing/broadcast methods and unrelated browser origins were rejected.
+- The real Alchemy credential was absent from 89 public browser assets inspected at release.
+- The live agreement displayed all seven lifecycle history entries and both released milestones.
 
-The Mainnet demo is complete. A public frontend release remains a separately
-authorized step; it must retain the server-side key handling and hosting abuse
-controls documented in `docs/phase1-alchemy.md`.
+Alchemy provides contract/state reads through the server-only gateway. Bounded event-history requests use Arc’s fixed public endpoint through that gateway. Existing local Testnet defaults remain available. Reown QR/mobile connections require their optional project ID; the demonstrated Mainnet connection used MetaMask.
+
+## Remaining items
+
+- Independent professional security audit.
+- Explorer source verification; the earlier verifier API attempt returned HTTP 403. Successful deployment and runtime reads do not establish source verification.
+- Submission materials not yet independently confirmed: Arc Studio project URL, walkthrough video, public repository access, and the final hackathon entry status. See [hackathon evidence](hackathon-evidence.md).
+
+The escrow is a working hackathon prototype. It has no refund, pause, rescue, or upgrade mechanism. See [production release](production-release.md) for hosting configuration and rollback details.

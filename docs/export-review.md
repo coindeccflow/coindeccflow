@@ -1,5 +1,7 @@
 # Export review — 31 October 2026
 
+This is the historical review of the original Arc Studio export, before the subsequent Mainnet release. For current hosting, wallet-demo results, and submission materials, see [production release](production-release.md) and [hackathon evidence](hackathon-evidence.md).
+
 Original archive SHA-256: `911a1be387dfcf4f59d5f5b92662b021548d7b514b6cf63309a7f22deac8fd37`.
 
 ## Changes
@@ -16,16 +18,13 @@ Original archive SHA-256: `911a1be387dfcf4f59d5f5b92662b021548d7b514b6cf63309a7f
 
 No upload, deployment, wallet connection, funding, or live transaction tests were performed. Known dummy keys in vendored forge-std test fixtures are preserved. No obvious project credentials were found in the original review. This is not a formal security audit or dependency vulnerability audit.
 
-## Private repository upload steps
+## Repository and hosting handoff
 
-1. Confirm `https://github.com/coindeccflow/coindeccflow` shows Private.
-2. Extract this corrected ZIP into a new folder. Keep package.json at the repository root and include hidden configuration files.
-3. Prefer cloning the existing repository and copying the extracted sources into it, including dotfiles. Preserve any existing repository content; review conflicts rather than overwrite blindly.
-4. Inspect every staged filename and the staged diff. Do not stage a real .env, private keys, wallets, node_modules, dist, or broadcast output. Do not force-add ignored files.
-5. Commit locally with `Initial commit — CoindeccFlow Arc Testnet milestone escrow` after reviewing the changes.
-6. Push only when the owner explicitly authorizes upload. Repository upload is separate from deployment.
+The reviewed sources have since been committed to `coindeccflow/coindeccflow`, and the validated Mainnet release is live on Vercel. The repository is currently private. Public visibility and submission completeness must be checked separately; a repository link does not grant judges access to private code.
 
-For later frontend hosting, install with Bun using the frozen lockfile, build with `bun run build`, and publish `dist` only after deployment is authorized. Configure the public VITE_FLOW_* values at build time; never put secrets in VITE_* variables. Confirm the existing testnet escrow address and deployment block independently; do not redeploy merely to host the frontend. Configure Reown allowed origins if WalletConnect is enabled. Contract deployment tools and live testnet rehearsal commands send transactions and are separate from the offline checks.
+Keep real environment files, credentials, wallet material, dependency directories, build output, and broadcast artifacts out of Git. The public `.env.example` and `.env.mainnet.example` templates contain configuration placeholders, not credentials. Inspect staged filenames and the diff before publishing changes.
+
+The current Vercel release includes both the frontend and server-side RPC function. A static-only upload of `dist` would omit that function. Use the current [release configuration](production-release.md), rather than the initial static-hosting plan. Contract deployment and live transaction commands require a separately reviewed wallet action.
 
 ## Validation completed
 
