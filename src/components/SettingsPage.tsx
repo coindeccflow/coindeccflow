@@ -116,7 +116,7 @@ export function SettingsPage() {
         </Row>
       </Group>
 
-      <p className="text-center text-xs text-muted">CoindeccFlow · Powered by CoindeccPay</p>
+      <p className="text-center text-xs text-muted">Powered by CoindeccFlow</p>
     </div>
   )
 }

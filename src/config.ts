@@ -54,7 +54,7 @@ export const config = createConfig({
   connectors: getDefaultConnectors({
     app: {
       name: 'CoindeccFlow',
-      description: 'Programmable USDC milestone payments on Arc, powered by CoindeccPay',
+      description: 'Programmable USDC milestone payments on Arc',
       url: origin,
       // WalletConnect wallets show this icon; it must be an absolute URL on this origin.
       icon: `${origin}/coindeccflow.svg`,

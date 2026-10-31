@@ -78,7 +78,7 @@ export function SidebarContent({ route, onNavigate, onClose }: { route: Route; o
 
       <div className="mt-auto space-y-4 pt-8">
         <ThemeToggle />
-        <p className="px-1 text-center text-[11px] font-medium uppercase tracking-[0.1em] text-muted">Powered by CoindeccPay</p>
+        <p className="px-1 text-center text-[11px] font-medium uppercase tracking-[0.1em] text-muted">Powered by CoindeccFlow</p>
       </div>
     </div>
   )

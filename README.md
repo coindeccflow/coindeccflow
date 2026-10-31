@@ -4,8 +4,6 @@ Programmable USDC milestone payments on Arc. A payer creates an agreement with m
 
 Built with [Arc Studio](https://studio.arc.io)
 
-Powered by CoindeccPay.
-
 ## What you can do
 
 - Connect a wallet and see your agreements, funded and settled USDC, and recent activity.

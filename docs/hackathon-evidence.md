@@ -6,7 +6,7 @@ Every value is either verified (with its source) or marked PENDING. Nothing here
 
 | Field | Value |
 | --- | --- |
-| Project | CoindeccFlow, programmable USDC milestone payments on Arc, powered by CoindeccPay |
+| Project | CoindeccFlow, programmable USDC milestone payments on Arc |
 | Arc Studio development evidence | Built and iterated in Arc Studio. Source of truth: this repository (`contracts/`, `src/`, `scripts/`, `docs/`). Screenshots or export of the Arc Studio project: PENDING |
 | GitHub repository | PENDING |
 | Live application URL | PENDING (deploy via Netlify, Vercel or Hugging Face from Arc Studio, then record the URL) |
