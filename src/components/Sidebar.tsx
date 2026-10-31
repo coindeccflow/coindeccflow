@@ -1,5 +1,6 @@
 import { CirclePlus, LayoutDashboard, Layers, ListChecks, Activity, Settings, X, type LucideIcon } from 'lucide-react'
 import { Link } from '@/components/Link'
+import { CoindeccFlowMark } from '@/components/CoindeccFlowMark'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import type { Route } from '@/hooks/useRoute'
 
@@ -22,16 +23,7 @@ export const NAV_ITEMS: NavItem[] = [
 export function Logo({ hideNameOnTiny = false }: { hideNameOnTiny?: boolean }) {
   return (
     <Link to="/" className="flex items-center gap-3" aria-label="CoindeccFlow overview">
-      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-brand to-mint shadow-glow">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-          <path
-            d="M3 8c3 0 3-3 6-3s3 3 6 3 3-3 6-3M3 14c3 0 3-3 6-3s3 3 6 3 3-3 6-3M3 20c3 0 3-3 6-3s3 3 6 3 3-3 6-3"
-            stroke="#050B18"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-          />
-        </svg>
-      </span>
+      <CoindeccFlowMark />
       <span className={`font-display text-[20px] font-bold leading-none tracking-tight text-fg ${hideNameOnTiny ? 'max-[419px]:hidden' : ''}`}>CoindeccFlow</span>
     </Link>
   )
