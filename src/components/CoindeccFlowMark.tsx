@@ -2,7 +2,7 @@
 export function CoindeccFlowMark() {
   return (
     <img
-      src="/coindeccflow.svg"
+      src="/coindeccflow.svg?v=2"
       alt=""
       aria-hidden="true"
       width={40}
