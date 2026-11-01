@@ -29,10 +29,12 @@ Agreement #1 was created, funded with 0.01 USDC, and completed through two appro
 
 Alchemy provides contract/state reads through the server-only gateway. Bounded event-history requests use Arc’s fixed public endpoint through that gateway. Existing local Testnet defaults remain available. Reown QR/mobile connections require their optional project ID; the demonstrated Mainnet connection used MetaMask.
 
+The source repository was made public after the 1 November 2026 publication review.
+
 ## Remaining items
 
 - Independent professional security audit.
 - Explorer source verification; the earlier verifier API attempt returned HTTP 403. Successful deployment and runtime reads do not establish source verification.
-- Submission materials not yet independently confirmed: Arc Studio project URL, walkthrough video, public repository access, and the final hackathon entry status. See [hackathon evidence](hackathon-evidence.md).
+- Submission materials not yet independently confirmed: Arc Studio project URL, walkthrough video, and the final hackathon entry status. See [hackathon evidence](hackathon-evidence.md).
 
 The escrow is a working hackathon prototype. It has no refund, pause, rescue, or upgrade mechanism. See [production release](production-release.md) for hosting configuration and rollback details.
