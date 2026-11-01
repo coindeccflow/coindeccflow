@@ -20,7 +20,7 @@ No upload, deployment, wallet connection, funding, or live transaction tests wer
 
 ## Repository and hosting handoff
 
-The reviewed sources have since been committed to `coindeccflow/coindeccflow`, and the validated Mainnet release is live on Vercel. The repository is currently private. Public visibility and submission completeness must be checked separately; a repository link does not grant judges access to private code.
+The reviewed sources have since been committed to `coindeccflow/coindeccflow`, and the validated Mainnet release is live on Vercel. The repository was made public after a further credential and documentation review on 1 November 2026. Submission completeness is tracked separately in [hackathon evidence](hackathon-evidence.md).
 
 Keep real environment files, credentials, wallet material, dependency directories, build output, and broadcast artifacts out of Git. The public `.env.example` and `.env.mainnet.example` templates contain configuration placeholders, not credentials. Inspect staged filenames and the diff before publishing changes.
 

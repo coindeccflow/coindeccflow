@@ -1,6 +1,6 @@
 # CoindeccFlow: hackathon evidence
 
-Status recorded on 31 October 2026. Confirmed implementation evidence is linked below. PENDING means the item has not been independently checked in this workspace; it does not mean the builder has not supplied it elsewhere.
+Status updated on 1 November 2026. Confirmed implementation evidence is linked below. PENDING means the item has not been independently checked in this workspace; it does not mean the builder has not supplied it elsewhere.
 
 ## Project
 
@@ -8,7 +8,7 @@ Status recorded on 31 October 2026. Confirmed implementation evidence is linked 
 | --- | --- |
 | Project | CoindeccFlow, programmable USDC milestone payments on Arc |
 | Arc Studio development evidence | Built and iterated in Arc Studio. Source of truth: this repository (`contracts/`, `src/`, `scripts/`, `docs/`). Public Arc Studio project URL and supporting screenshots/export: PENDING |
-| GitHub repository | [coindeccflow/coindeccflow](https://github.com/coindeccflow/coindeccflow); repository is currently private. Public access remains unresolved for submission review. |
+| GitHub repository | [Public source repository](https://github.com/coindeccflow/coindeccflow); made public after the 1 November 2026 publication review. |
 | Live application URL | [Production app](https://coindeccflow.vercel.app/) and [completed Mainnet demo](https://coindeccflow.vercel.app/agreement/1) |
 | Dora project | [Published project and updated description](https://dorahacks.io/build/48921) |
 | Final hackathon entry status | PENDING: project publication alone does not confirm entry into the hackathon. |

@@ -1,6 +1,6 @@
 # Repository documentation and credential review
 
-Review date: 31 October 2026. Scope: the current project files, documentation, tracked images, ignore rules, and locally available Git history. This is a repository hygiene review, not an independent smart-contract security audit.
+Initial review: 31 October 2026. Publication follow-up: 1 November 2026. Scope: the current project files, documentation, tracked images, ignore rules, and locally available Git history. This is a repository hygiene review, not an independent smart-contract security audit.
 
 ## Findings and corrections
 
@@ -20,10 +20,18 @@ The earlier release scan separately checked 89 public browser assets and found n
 
 Relative documentation links, whitespace checks, private-file ignore checks, public-template tracking, and absence of the known key from changed files passed. These corrections change documentation and ignore rules; application source, contracts, dependencies, and runtime configuration are unchanged.
 
-The scan does not establish the absence of every possible unknown or obfuscated credential, unreachable Git objects, files outside this repository, or independent remote-only history. Ignoring a file also does not remove an already committed file. A credential that was actually disclosed must be rotated rather than merely deleted from the latest revision.
+The scan does not establish the absence of every possible unknown or obfuscated credential, unreachable Git objects, files outside this repository, or data outside the enumerated repository refs. Ignoring a file also does not remove an already committed file. A credential that was actually disclosed must be rotated rather than merely deleted from the latest revision.
 
-## Remaining status
+## Publication follow-up — 1 November 2026
 
-The repository is currently private. Public judge access, the Arc Studio project URL, the walkthrough video, and final hackathon entry confirmation must be checked before claiming submission completeness. A published Dora project is separate from a confirmed entry into a particular hackathon.
+GitHub showed three branches and no tags before publication. Its 13 reachable commits contained 11 distinct source snapshots; every snapshot matched a tree available in the local review. The 193 current remote files also matched the reviewed local files exactly. This closes the earlier gap between local-history checks and the enumerated remote branch history.
+
+The renewed scan covered 193 tracked files and 253 local historical blob objects, plus commit messages. It found no project credential candidates after classifying the standard public Anvil fixture. Documentation links and private-file exclusion checks passed. These are targeted hygiene checks, not proof that every unknown or obfuscated secret is absent.
+
+The owner authorized publication after review. GitHub confirmed `visibility: public` and `private: false` for [coindeccflow/coindeccflow](https://github.com/coindeccflow/coindeccflow). The repository summary now describes the implemented Mainnet milestone-payment flow.
+
+## Remaining submission status
+
+The source is publicly accessible for judge review. The Arc Studio project URL, walkthrough video, and final hackathon entry confirmation remain independently unverified. A published Dora project is separate from a confirmed entry into a particular hackathon.
 
 “Hackathon prototype” describes a functional implementation whose independent security audit and explorer source verification are outstanding. It is not a statement that the app lacks a working Mainnet implementation. Eligibility and award selection are determined by the organizer’s rules and review.
